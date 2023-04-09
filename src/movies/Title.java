@@ -11,6 +11,7 @@ public class Title {
 	private int releaseYear;
 	private String director;
 	private String ageRating;
+	private String imgURL;
 	
 	/**
 	 * Creates a new title.
@@ -20,11 +21,12 @@ public class Title {
 	 * @param director String, the director of the film.
 	 * @param ageRating String, the age rating of the film.
 	 */
-	public Title(String titleName, int releaseYear, String director, String ageRating) {
+	public Title(String titleName, int releaseYear, String director, String ageRating, String imgURL) {
 		this.titleName = titleName;
 		this.releaseYear = releaseYear;
 		this.director = director;
 		this.ageRating = ageRating;
+		this.imgURL = imgURL;
 	}
 
 	/**
@@ -62,6 +64,19 @@ public class Title {
 	public String getAgeRating() {
 		return ageRating;
 	}
+
+	public String getImgURL() {
+		return imgURL;
+	}
 	
+
+	/**
+	 * Overrides the toString method to show the values of our fields.
+	 */
+	@Override
+	public String toString() {
+		return "" + titleName + ", " + releaseYear + ", " + director
+				+ ", " + ageRating + ", " + imgURL;
+	}
 	
 }
