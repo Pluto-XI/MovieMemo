@@ -126,6 +126,7 @@ public class MovieGUI extends JFrame {
 			// Create a label with the image and add it to the card panel
 			JLabel imageLabel = new JLabel(scaledIcon);
 			card.add(imageLabel);
+			card.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 			// Add the title label to the card panel
 			card.add(cardLabel, BorderLayout.SOUTH);
@@ -182,8 +183,8 @@ public class MovieGUI extends JFrame {
 					infoPanel.add(ratingLabel);
 					
 					// Create a new JLabel button for going back to the original view
-					JLabel backButton = new JLabel("<< Back to Movie Grid");
-					backButton.setFont(new Font("Arial", Font.PLAIN, 18));
+					JLabel backButton = new JLabel("<< Back to Movies");
+					backButton.setFont(new Font("Arial", Font.BOLD, 11));
 					backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 					// Add a mouse listener to the back button to go back to the movie grid
