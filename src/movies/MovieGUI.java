@@ -9,15 +9,15 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -165,7 +165,7 @@ public class MovieGUI extends JFrame {
 					detailView.add(movieCard, BorderLayout.WEST);
 
 					// create the information panel on the right
-					GridLayout gridLayout = new GridLayout(4, 1);
+					GridLayout gridLayout = new GridLayout(5, 1, 0, 10);
 					gridLayout.setVgap(-400);
 					JPanel infoPanel = new JPanel(gridLayout);
 
@@ -181,6 +181,9 @@ public class MovieGUI extends JFrame {
 					infoPanel.add(releaseDateLabel);
 					infoPanel.add(directorLabel);
 					infoPanel.add(ratingLabel);
+
+					// add the info panel to the detail view panel
+					detailView.add(infoPanel, BorderLayout.CENTER);
 					
 					// Create a new JLabel button for going back to the original view
 					JLabel backButton = new JLabel("<< Back to Movies");
