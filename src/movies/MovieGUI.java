@@ -94,8 +94,8 @@ public class MovieGUI extends JFrame {
             ImageIcon imageIcon = new ImageIcon(imgPath);
 
             // Scale the image to fit the label
-            int labelWidth = 150;
-            int labelHeight = 220;
+            int labelWidth = 160;
+            int labelHeight = 230;
             Image originalImage = imageIcon.getImage();
             Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
