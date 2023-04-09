@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,6 +27,7 @@ public class MovieGUI extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		TitleDataStore.readFromDataSource("movies");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -47,6 +50,7 @@ public class MovieGUI extends JFrame {
         
         // Create the content pane
         contentPane = new JPanel();
+        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
@@ -78,13 +82,30 @@ public class MovieGUI extends JFrame {
         JPanel cardPanel = new JPanel(new GridLayout(0, 4));
         contentPane.add(cardPanel, BorderLayout.CENTER);
 
-        //Add the cards to our GUI
-        for (int i = 1; i <= 15; i++) {
+     // Add the cards to our GUI
+        for (Title title : TitleDataStore.titlesArray) {
             JPanel card = new JPanel();
-            card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            card.setPreferredSize(new Dimension(200, 200));
-            JLabel cardLabel = new JLabel("Card " + i);
-            card.add(cardLabel);
+//            card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            card.setPreferredSize(new Dimension(210, 300)); // increased the height to make room for the label
+            JLabel cardLabel = new JLabel(title.getTitleName());
+
+            // Load the image from a file
+            String imgPath = "src/movies/img/" + title.getImgURL();
+            ImageIcon imageIcon = new ImageIcon(imgPath);
+
+            // Scale the image to fit the label
+            int labelWidth = 150;
+            int labelHeight = 220;
+            Image originalImage = imageIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+            // Create a label with the image and add it to the card panel
+            JLabel imageLabel = new JLabel(scaledIcon);
+            card.add(imageLabel);
+
+            // Add the title label to the card panel
+            card.add(cardLabel, BorderLayout.SOUTH);
             cardPanel.add(card);
         }
 
@@ -92,6 +113,7 @@ public class MovieGUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(cardPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(null);
 
         // Add the scroll pane to the content pane
         contentPane.add(scrollPane, BorderLayout.CENTER);
