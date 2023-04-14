@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -28,12 +29,17 @@ import javax.swing.JScrollPane;
 public class MovieGUI extends JFrame {
 
 	private JPanel contentPane;
+	private boolean isInMainListView;
+	public static UserTitles userTitles;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		TitleDataStore.readFromDataSource("movies");
+		userTitles = new UserTitles();
+		userTitles.addTitleToUserList("The Shawshank Redemption", StarRating.THREE_STARS, true);
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -73,19 +79,17 @@ public class MovieGUI extends JFrame {
 		FlowLayout fl_linksPanel = createLinkPanel();
 		JPanel linksPanel = new JPanel(fl_linksPanel);
 		topPanel.add(linksPanel, BorderLayout.EAST);
-
-		// Create the links labels and add them to the links panel
-		JLabel movieListLbl = new JLabel("Movie List");
-		movieListLbl.setFont(new Font("Arial", Font.BOLD, 26));
-		JLabel favoriteListLbl = new JLabel("My List");
-		favoriteListLbl.setForeground(new Color(200, 200, 200));
-		favoriteListLbl.setFont(new Font("Arial", Font.BOLD, 26));
-		linksPanel.add(movieListLbl);
-		linksPanel.add(favoriteListLbl);
+		
+		//
+		// Card view with content panel
+		CardLayout cardLayout = new CardLayout(0, 0);
+		JPanel contentPanelCardStack = new JPanel();
+		contentPanelCardStack.setLayout(cardLayout);
 
 		// Create our panel for the cards
 		JPanel cardPanel = new JPanel(new GridLayout(0, 4));
-		contentPane.add(cardPanel, BorderLayout.CENTER);
+		// contentPane.add(cardPanel, BorderLayout.CENTER);
+		contentPanelCardStack.add(cardPanel, "MainPanel"); // CHANGED
 
 		// Add the cards to our GUI
 		createMovieGrid(cardPanel);
@@ -97,7 +101,51 @@ public class MovieGUI extends JFrame {
 		scrollPane.setBorder(null);
 
 		// Add the scroll pane to the content pane
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		//contentPane.add(scrollPane, BorderLayout.CENTER);
+		contentPanelCardStack.add(scrollPane, "MainPanel"); // CHANGED
+		contentPane.add(contentPanelCardStack, BorderLayout.CENTER);
+		
+		
+		// Favorites
+		this.isInMainListView = true;
+		FavoritePanel favoritePanel = new FavoritePanel(userTitles);
+		contentPanelCardStack.add(favoritePanel, "FavoritePanel");
+		
+		JLabel favoriteListLbl = new JLabel("My List");
+		favoriteListLbl.setForeground(new Color(200, 200, 200));
+		favoriteListLbl.setFont(new Font("Arial", Font.BOLD, 26));
+		
+		// Create the links labels and add them to the links panel
+		JLabel movieListLbl = new JLabel("Movie List");
+		movieListLbl.setFont(new Font("Arial", Font.BOLD, 26));
+		
+		movieListLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			    if (!isInMainListView) {
+			    	isInMainListView = true;
+			    	movieListLbl.setForeground(Color.BLACK);
+			    	favoriteListLbl.setForeground(new Color(200, 200, 200));
+			    	cardLayout.show(contentPanelCardStack, "MainPanel");
+			    }
+			}
+		});
+		
+		favoriteListLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			    if (isInMainListView) {
+			    	isInMainListView = false;
+			    	movieListLbl.setForeground(new Color(200, 200, 200));
+			    	favoriteListLbl.setForeground(Color.BLACK);
+			    	favoritePanel.updateMovieTable(userTitles);
+			    	cardLayout.show(contentPanelCardStack, "FavoritePanel");
+			    }
+			}
+		});
+		
+		linksPanel.add(movieListLbl);
+		linksPanel.add(favoriteListLbl);
 
 		setSize(912, 560);
 		setLocationRelativeTo(null);
@@ -181,6 +229,10 @@ public class MovieGUI extends JFrame {
 					infoPanel.add(releaseDateLabel);
 					infoPanel.add(directorLabel);
 					infoPanel.add(ratingLabel);
+					
+					// User Rating
+					UserRatingAndBookmarkPanel userRatingSection = new UserRatingAndBookmarkPanel(title.getTitleName(), userTitles);
+					detailView.add(userRatingSection, BorderLayout.SOUTH);
 
 					// add the info panel to the detail view panel
 					detailView.add(infoPanel, BorderLayout.CENTER);
