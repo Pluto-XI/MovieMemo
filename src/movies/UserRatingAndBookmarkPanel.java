@@ -1,5 +1,6 @@
 package movies;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +20,12 @@ import javax.swing.JTextField;
 public class UserRatingAndBookmarkPanel extends JPanel {
 	
 	private String titleName;
-	private UserTitles userTitles;
 
 	/**
 	 * Create the panel.
 	 */
 	public UserRatingAndBookmarkPanel(String titleName, UserTitles userTitles) {
-		super(new GridLayout(1, 5));
+		super(new GridLayout(4, 1));
 		
 		JLabel userRatingLabel = new JLabel("Your Rating:");
 		JLabel addToFavoritesLabel = new JLabel("Favorite:");
@@ -52,19 +52,22 @@ public class UserRatingAndBookmarkPanel extends JPanel {
 		*/
 		
 		JTextField ratingField = new JTextField("Rate");
+		if (userTitles.isTitleInUserList(titleName)) {
+			UserRating userRating = userTitles.getRatingFromTitleName(titleName);
+			ratingField.setText(userRating.starRatingToString());
+		}
+		
 		ratingField.addKeyListener(new KeyAdapter() {
 			@Override
 	        public void keyPressed(KeyEvent e) {
 	            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+	            	String textInBox = ((JTextField)e.getSource()).getText();
 	            	if (userTitles.isTitleInUserList(titleName)) {
 						UserRating userRating = userTitles.getRatingFromTitleName(titleName);
-						userTitles.removeTitleFromUserList(titleName);
-						userTitles.addTitleToUserList(titleName, userRating.getRating(), userRating.isFavorite());
+						userTitles.addTitleToUserList(titleName, Integer.parseInt(textInBox), userRating.isFavorite());
 					} else {
-						String textInBox = ((JTextField)e.getSource()).getText();
 						StarRating rating = UserRating.getStarRatingFromInt(Integer.parseInt(textInBox));
 						UserRating newRating = new UserRating(rating, false);
-						userTitles.removeTitleFromUserList(titleName);
 						userTitles.addTitleToUserList(titleName, newRating.getRating(), newRating.isFavorite());
 					}
 	            }
@@ -82,9 +85,15 @@ public class UserRatingAndBookmarkPanel extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-		            userTitles.addTitleToUserList(titleName, StarRating.NO_RATING, true);
+					if (userTitles.isTitleInUserList(titleName)) {
+						UserRating userRating = userTitles.getRatingFromTitleName(titleName);
+			            userTitles.addTitleToUserList(titleName, userRating.getRating(), true);
+					} else {
+						userTitles.addTitleToUserList(titleName, StarRating.NO_RATING, true);
+					}
 		        } else {
-		        	userTitles.removeTitleFromUserList(titleName);
+		        	UserRating userRating = userTitles.getRatingFromTitleName(titleName);
+		        	userTitles.addTitleToUserList(titleName, userRating.getRating(), false);
 		        }
 				
 			}

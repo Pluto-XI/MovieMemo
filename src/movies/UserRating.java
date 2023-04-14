@@ -46,6 +46,10 @@ public class UserRating {
 		}
 	}
 	
+	public String starRatingToString() {
+		return getStarRatingAsString(rating);
+	}
+	
 	public static String getStarRatingAsString(StarRating rating) {
 		switch(rating) {
 			case NO_RATING:  	return "0";

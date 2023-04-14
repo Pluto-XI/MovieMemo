@@ -38,7 +38,6 @@ public class MovieGUI extends JFrame {
 	public static void main(String[] args) {
 		TitleDataStore.readFromDataSource("movies");
 		userTitles = new UserTitles();
-		userTitles.addTitleToUserList("The Shawshank Redemption", StarRating.THREE_STARS, true);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -88,8 +87,7 @@ public class MovieGUI extends JFrame {
 
 		// Create our panel for the cards
 		JPanel cardPanel = new JPanel(new GridLayout(0, 4));
-		// contentPane.add(cardPanel, BorderLayout.CENTER);
-		contentPanelCardStack.add(cardPanel, "MainPanel"); // CHANGED
+		contentPanelCardStack.add(cardPanel, "MainPanel");
 
 		// Add the cards to our GUI
 		createMovieGrid(cardPanel);
@@ -101,8 +99,7 @@ public class MovieGUI extends JFrame {
 		scrollPane.setBorder(null);
 
 		// Add the scroll pane to the content pane
-		//contentPane.add(scrollPane, BorderLayout.CENTER);
-		contentPanelCardStack.add(scrollPane, "MainPanel"); // CHANGED
+		contentPanelCardStack.add(scrollPane, "MainPanel");
 		contentPane.add(contentPanelCardStack, BorderLayout.CENTER);
 		
 		
