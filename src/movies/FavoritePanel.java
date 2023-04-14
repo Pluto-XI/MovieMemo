@@ -10,6 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Panel that holds the list of favorites
+ * @author Giovanni Soto
+ */
 public class FavoritePanel extends JPanel {
 	
 	//private UserTitles userTitles;

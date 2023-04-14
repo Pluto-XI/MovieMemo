@@ -5,6 +5,11 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Row that holds JLabels for the User favorited titles
+ * @author Giovanni Soto
+ *
+ */
 public class TitleTableRow extends JPanel {
 
 	/**

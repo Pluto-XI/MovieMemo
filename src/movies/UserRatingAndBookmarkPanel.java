@@ -17,6 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Panel that holds the user interaction for rating and bookmarking
+ * @author Giovanni Soto
+ *
+ */
 public class UserRatingAndBookmarkPanel extends JPanel {
 	
 	private String titleName;

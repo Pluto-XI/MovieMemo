@@ -26,6 +26,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 
+/**
+ * The main GUI application for Movie Memo
+ * 
+ * @author Nick Delgado and Giovanni Soto
+ *
+ */
 public class MovieGUI extends JFrame {
 
 	private JPanel contentPane;
