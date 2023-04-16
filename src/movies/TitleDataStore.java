@@ -52,7 +52,7 @@ public class TitleDataStore {
 	 * @param rawList The raw string from our read from data source method.
 	 */
 	public static void addTitle(String rawList) {
-		String[] titles = rawList.split("\\|\\|"); // We need to escape | since it's a special char in regex. Returns
+		String[] titles = rawList.split("\\|\\|"); // We need to escape | since it's a special char in regex.
 		for (int i = 0; i < titles.length; i++) {  // Let's run through every individual title and create a title out of it to add to our title list.
 			String[] title = titles[i].split(","); // Split the title again to get our individual params.
 			Title movie = new Title(title[0], Integer.parseInt(title[1]), title[2], title[3], title[4]);
