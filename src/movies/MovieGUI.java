@@ -235,7 +235,7 @@ public class MovieGUI extends JFrame {
 					
 					// User Rating
 					UserRatingAndBookmarkPanel userRatingSection = new UserRatingAndBookmarkPanel(title.getTitleName(), userTitles);
-					detailView.add(userRatingSection, BorderLayout.SOUTH);
+					infoPanel.add(userRatingSection);
 
 					// add the info panel to the detail view panel
 					detailView.add(infoPanel, BorderLayout.CENTER);

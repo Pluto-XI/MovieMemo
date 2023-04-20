@@ -16,6 +16,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import java.awt.Color;
 
 /**
  * Panel that holds the user interaction for rating and bookmarking
@@ -30,21 +33,42 @@ public class UserRatingAndBookmarkPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public UserRatingAndBookmarkPanel(String titleName, UserTitles userTitles) {
-		super(new GridLayout(4, 1));
+		super(new GridLayout(4, 1, 0, 0));
+		//gridLayout.setVgap(-400);
+		this.setBorder(BorderFactory.createEmptyBorder(200, 0, 0, 0));
 		
 		JLabel userRatingLabel = new JLabel("Your Rating:");
-		JLabel addToFavoritesLabel = new JLabel("Favorite:");
 		
-		/*
+		JPanel StarButtonGrid = new JPanel(new GridLayout(1, 5));
+		
 		StarButton[] starButtons = new StarButton[5];
 		for (int i = 0; i < 5; i++) {
-			starButtons[i] = new StarButton(i);
+			starButtons[i] = new StarButton(i + 1);
+			if (userTitles.isTitleInUserList(titleName)) {
+				UserRating userRating = userTitles.getRatingFromTitleName(titleName);
+				if (userRating.starRatingToInt() == (i + 1)) {
+					starButtons[i].toggleColor();
+				}
+			}
+			
 			starButtons[i].addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					StarButton sourceButton = ((StarButton)e.getSource());
+					int sourceRating = sourceButton.getRating();
+					
+					for (int i = 0; i < 5; i++) {
+						if ((i + 1) != sourceRating) {
+							starButtons[i].setDeselected();
+						}
+					}
+					sourceButton.setSelected();
+					
+					
 					if (userTitles.isTitleInUserList(titleName)) {
+						int numericRating = ((StarButton)e.getSource()).getRating();
 						UserRating userRating = userTitles.getRatingFromTitleName(titleName);
-						userTitles.addTitleToUserList(titleName, ((StarButton)e.getSource()).getRating(), userRating.isFavorite());
+						userTitles.addTitleToUserList(titleName, numericRating, userRating.isFavorite());
 					} else {
 						UserRating newRating = new UserRating(((StarButton)e.getSource()).getRating(), false);
 						userTitles.addTitleToUserList(titleName, newRating.getRating(), newRating.isFavorite());
@@ -52,10 +76,10 @@ public class UserRatingAndBookmarkPanel extends JPanel {
 				}
 			});
 			
-			this.add(starButtons[i]);
+			StarButtonGrid.add(starButtons[i]);
 		}
-		*/
 		
+		/*
 		JTextField ratingField = new JTextField("Rate");
 		if (userTitles.isTitleInUserList(titleName)) {
 			UserRating userRating = userTitles.getRatingFromTitleName(titleName);
@@ -78,6 +102,10 @@ public class UserRatingAndBookmarkPanel extends JPanel {
 	            }
 	        }
 		});
+		*/
+		
+		JPanel favoritesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel addToFavoritesLabel = new JLabel("Add to Favorites:");
 		
 		JCheckBox favoritedCheckbox = new JCheckBox();
 		
@@ -103,11 +131,16 @@ public class UserRatingAndBookmarkPanel extends JPanel {
 				
 			}
 		});
+		
+		favoritesPanel.add(addToFavoritesLabel);
+		favoritesPanel.add(favoritedCheckbox);
 
 		this.add(userRatingLabel);
-		this.add(ratingField);
-		this.add(addToFavoritesLabel);
-		this.add(favoritedCheckbox);
+		this.add(StarButtonGrid);
+		this.add(favoritesPanel);
+		//this.add(ratingField);
+		//this.add(addToFavoritesLabel);
+		//this.add(favoritedCheckbox);
 	}
 
 }

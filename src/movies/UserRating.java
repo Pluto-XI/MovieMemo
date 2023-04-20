@@ -50,6 +50,18 @@ public class UserRating {
 		return getStarRatingAsString(rating);
 	}
 	
+	public int starRatingToInt() {
+		switch(this.rating) {
+			case NO_RATING:  	return 0;
+			case ONE_STAR:   	return 1;
+			case TWO_STARS:  	return 2;
+			case THREE_STARS:	return 3;
+			case FOUR_STARS:	return 4;
+			case FIVE_STARS:	return 5;
+			default: 			return 0;
+		}
+	}
+	
 	public static String getStarRatingAsString(StarRating rating) {
 		switch(rating) {
 			case NO_RATING:  	return "0";

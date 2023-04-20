@@ -32,7 +32,8 @@ public class FavoritePanel extends JPanel {
 	}
 	
 	private void createControlPanel(UserTitles userTitles) {
-		JPanel favoritePanelControls = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel favoritePanelControls = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel myFavoritesLabel = new JLabel("My Favorite Movies:");
 		JButton exportButton = new JButton("Export");
 		exportButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -41,6 +42,7 @@ public class FavoritePanel extends JPanel {
 			}
 		});
 		
+		favoritePanelControls.add(myFavoritesLabel);
 		favoritePanelControls.add(exportButton);
 		this.add(favoritePanelControls);
 	}
