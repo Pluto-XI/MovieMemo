@@ -29,11 +29,21 @@ public class UserRating {
 		this.isFavorite = isFavorite;
 	}
 	
+	/**
+	 * Construct a new User rating from a primary int
+	 * @param rating - Integer rating
+	 * @param isFavorite - Is this favorited by the user?
+	 */
 	public UserRating(int rating, boolean isFavorite) {
 		this.rating = getStarRatingFromInt(rating);
 		this.isFavorite = isFavorite;
 	}
 	
+	/**
+	 * Given an integer rating, return a star rating corresponding to input
+	 * @param rating - Integer rating
+	 * @return - Corresponding rating
+	 */
 	public static StarRating getStarRatingFromInt(int rating) {
 		switch(rating) {
 			case 0:  return StarRating.NO_RATING;
@@ -46,10 +56,18 @@ public class UserRating {
 		}
 	}
 	
+	/**
+	 * Get the star rating as a string
+	 * @return star rating as a string
+	 */
 	public String starRatingToString() {
 		return getStarRatingAsString(rating);
 	}
 	
+	/**
+	 * Convert this UserRating's StarRating to an integer rating
+	 * @return integer rating
+	 */
 	public int starRatingToInt() {
 		switch(this.rating) {
 			case NO_RATING:  	return 0;
@@ -62,6 +80,11 @@ public class UserRating {
 		}
 	}
 	
+	/**
+	 * Statically convert StarRating to an integer string rating
+	 * @param rating - Star rating
+	 * @return integer - rating as a string
+	 */
 	public static String getStarRatingAsString(StarRating rating) {
 		switch(rating) {
 			case NO_RATING:  	return "0";
@@ -74,6 +97,10 @@ public class UserRating {
 		}
 	}
 	
+	/**
+	 * Format this rating as a fraction
+	 * @return - string as a fraction
+	 */
 	public String formatStarRating() {
 		switch(rating) {
 			case NO_RATING:  	return "0/5";

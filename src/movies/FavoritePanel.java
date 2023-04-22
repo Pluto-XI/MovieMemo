@@ -31,6 +31,11 @@ public class FavoritePanel extends JPanel {
 		createMovieTable(userTitles);
 	}
 	
+	/**
+	 * Create the Control Panel which is made up of the favorite movie label
+	 * and the export button.
+	 * @param userTitles - The User list of titles
+	 */
 	private void createControlPanel(UserTitles userTitles) {
 		JPanel favoritePanelControls = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel myFavoritesLabel = new JLabel("My Favorite Movies:");
@@ -47,6 +52,9 @@ public class FavoritePanel extends JPanel {
 		this.add(favoritePanelControls);
 	}
 
+	/**
+	 * Creates the table headers
+	 */
 	private void createTableHeader() {
 		JPanel tableHeaderPanel = new JPanel(new GridLayout(1, 5));
 		
@@ -68,6 +76,10 @@ public class FavoritePanel extends JPanel {
 		this.add(tableHeaderPanel);
 	}
 	
+	/**
+	 * Create a table which is made up of rows of the user title favorites
+	 * @param userTitles - The user rated titles and favorites
+	 */
 	private void createMovieTable(UserTitles userTitles) {
 		for (Title title : userTitles.getTitlesFromUserFavorites()) {
 			String titleName = title.getTitleName();
@@ -78,6 +90,10 @@ public class FavoritePanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Update the rows to reflect new data entered in user titles.
+	 * @param userTitles - The user rated titles and favorites
+	 */
 	public void updateMovieTable(UserTitles userTitles) {
 		this.removeAll();
 		this.revalidate();
