@@ -1,7 +1,11 @@
 package movies;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,14 +39,12 @@ public class TitleDataStore {
 	 */
 	public static void readFromDataSource(String filename) {
 		String movieDump = "";
-		try {
-			File file = new File(filename);
-			Scanner scanner = new Scanner(file);
-			movieDump = scanner.nextLine();
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		
+		InputStream fileStream = TitleDataStore.class.getResourceAsStream(filename);
+		Scanner scanner = new Scanner(fileStream);
+		movieDump = scanner.nextLine();
+		scanner.close();
+		
 		addTitle(movieDump);
 	}
 	

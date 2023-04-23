@@ -37,12 +37,17 @@ public class MovieGUI extends JFrame {
 	private JPanel contentPane;
 	private boolean isInMainListView;
 	public static UserTitles userTitles;
+	
+	private final static String MOVIELIST_PATH = "list/movielist";
+	private final static String IMG_PATH = "img/";
+	private final static String ICON_PATH = "img/Logo.png";
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		TitleDataStore.readFromDataSource("movies");
+		TitleDataStore.readFromDataSource(MOVIELIST_PATH);
 		userTitles = new UserTitles();
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -164,8 +169,8 @@ public class MovieGUI extends JFrame {
 			JLabel cardLabel = new JLabel(title.getTitleName());
 
 			// Load the image from a file
-			String imgPath = "src/movies/img/" + title.getImgURL();
-			ImageIcon imageIcon = new ImageIcon(imgPath);
+			String imgPath = IMG_PATH + title.getImgURL();
+			ImageIcon imageIcon = new ImageIcon(MovieGUI.class.getResource(imgPath));
 
 			// Scale the image to fit the label
 			int labelWidth = 160;
@@ -198,8 +203,8 @@ public class MovieGUI extends JFrame {
 					JPanel movieCard = new JPanel(new BorderLayout());
 
 					// Load the image from a file
-					String imgPath = "src/movies/img/" + title.getImgURL();
-					ImageIcon imageIcon = new ImageIcon(imgPath);
+					String imgPath = IMG_PATH + title.getImgURL();
+					ImageIcon imageIcon = new ImageIcon(MovieGUI.class.getResource(imgPath));
 
 					// scale the image to fit the label
 					int labelWidth = 300;
@@ -284,7 +289,7 @@ public class MovieGUI extends JFrame {
 	private JLabel createLogoLbl() {
 		JLabel logoLabel = new JLabel();
 		logoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		logoLabel.setIcon(new ImageIcon(MovieGUI.class.getResource("/movies/img/Logo.png")));
+		logoLabel.setIcon(new ImageIcon(MovieGUI.class.getResource(ICON_PATH)));
 		return logoLabel;
 	}
 
